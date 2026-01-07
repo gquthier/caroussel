@@ -1,0 +1,100 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id          String   @id @default(cuid())
+  email       String?  @unique
+  telegramId  Int?     @unique
+  telegramUsername String?
+  name        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  projects    Project[]
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  title       String
+  concept     String
+  vibe        String   // "Nike Greatness", "Horror Thread", etc.
+  status      String   @default("draft") // draft, generating, completed, failed
+  
+  // Telegram integration
+  telegramChatId Int?  // Chat ID Telegram si vient de Telegram
+  telegramMessageId Int? // Message ID Telegram pour répondre
+  
+  // User relationship
+  userId      String?
+  user        User?    @relation(fields: [userId], references: [id])
+  
+  // Metadata (scenarios, scripts générés)
+  initialScenario String?  // Scénario avant viral sauce
+  reworkedScenario String? // Scénario après viral sauce
+  rawScript String?        // Script avant normalisation
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  slides      Slide[]
+  queueHistory QueueHistory[]
+  
+  @@index([userId])
+  @@index([telegramChatId])
+}
+
+model Slide {
+  id            String   @id @default(cuid())
+  projectId     String
+  project       Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  
+  order         Int      // Position in the carousel (0-based)
+  role          String   // HOOK, CONTEXT, DOPAMINE, CLIMAX, CTA
+  textContent   String
+  showCaption   Boolean  @default(true) // Toggle to show/hide caption overlay
+  
+  // Image data
+  imageUrl      String?
+  imagePrompt   String
+  imageStatus   String   @default("pending") // pending, generating, completed, failed
+  
+  // Audio data
+  voiceoverUrl  String?
+  voiceoverText String?
+  voiceId       String?  @default("21m00Tcm4TlvDq8ikWAM") // Default ElevenLabs voice
+  audioStatus   String   @default("pending") // pending, generating, completed, failed
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  @@index([projectId])
+}
+
+model QueueHistory {
+  id          String   @id @default(cuid())
+  projectId   String
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  
+  stage       String   // transcription, scenario, image_prompts, script, images, audio, completed
+  status      String   // pending, in_progress, completed, failed
+  message     String?  // Message de progression ou d'erreur
+  metadata    String?  // JSON avec données supplémentaires
+  
+  startedAt   DateTime @default(now())
+  completedAt DateTime?
+  
+  @@index([projectId])
+  @@index([stage])
+  @@index([status])
+}
+

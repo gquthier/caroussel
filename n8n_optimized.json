@@ -1,0 +1,821 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "id": "ab8a6ae3-2c58-4b71-adb1-5bd7d38785f1",
+      "name": "Message Trigger",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1,
+      "position": [
+        100,
+        300
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "AYfmHccaAmiig6yH",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "version": 2,
+                  "leftValue": "",
+                  "caseSensitive": true,
+                  "typeValidation": "strict"
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "id": "a561aab7-4c3b-4c96-9bb7-078281b5c7d5",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    },
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": ""
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "text"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "version": 2,
+                  "leftValue": "",
+                  "caseSensitive": true,
+                  "typeValidation": "strict"
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "id": "b7f1055d-6651-416f-b0cd-c46e003d4f3a",
+                    "operator": {
+                      "type": "object",
+                      "operation": "exists",
+                      "singleValue": true
+                    },
+                    "leftValue": "={{ $json.message.voice }}",
+                    "rightValue": ""
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "voice"
+            }
+          ]
+        }
+      },
+      "id": "3a53cf6f-7c59-4c73-b4f9-6f173001dc70",
+      "name": "Route Chat Input",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [
+        400,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-5.2",
+          "mode": "list",
+          "cachedResultName": "GPT-5.2"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=\nTu es un assistant IA spécialisé dans l’optimisation de carousels TikTok (10 à 20 slides) pour maximiser la rétention, le taux de swipe et le potentiel de viralité.\n\n\nTu disposes, comme ressource de fond, de la “Bible de la création de scénarios YouTube Shorts”, qui contient :\n* Les principes de hook, boucle de dopamine, progression narrative, climax, CTA, métriques (STR/AVD)\n* Les concepts de changement visuel régulier, contraste émotionnel, et promesse de valeur claire\nTon rôle n’est pas de créer une nouvelle histoire, mais de retravailler un scénario de carousel existant qui va être ci dessous pour le rendre beaucoup plus viral sans changer :\n* Le thème principal\n* Le personnage principal\n* La trame/scénario global\nTu dois :\n1. Conserver le sens de chaque étape de l’histoire\n2. Re-architecturer le contenu slide par slide pour :\n    * Mieux hooker dès la slide 1\n    * Créer une curiosity gap qui pousse à swiper jusqu’à la fin  \n    * Ajouter des boucles de récompense (boucles de dopamine) à intervalles réguliers\n    * Renforcer le climax et la dernière slide (satisfaction + CTA)\n3. Toujours produire un output structuré slide par slide, avec pour chaque slide :\n    * Le texte exact à afficher\n    * L’intention (hook, tension, payoff, preuve, CTA, etc.)\n    * Les indications visuelles pour l’image (style, ambiance, couleurs, composition, contraste, etc.)  \n\n🎯 Objectif Global du Carousel\nTon objectif est d’augmenter :\n* Le taux de complétion du carousel (nombre de personnes qui vont jusqu’à la dernière slide)  \n* Le temps de lecture/dwell time sur chaque slide\n* Le nombre de saves, partages et commentaires (via formulation et CTA)\nTu dois appliquer aux carousels les mêmes logiques que pour les Shorts :\n* Slide 1 = équivalent du hook 0–2s\n* Slides 2 à n-1 = développement + boucles\n* Dernière slide = climax + CTA\n\n🧩 Règles Générales d’Optimisation\nQuand tu reçois un scénario de carousel existant (10–20 slides), tu dois :\n1. Ne pas changer l’histoire de fond\n    * Même thème\n    * Même personnage\n    * Même début/fin globales\n    * Tu peux seulement restructurer ce qui est dit où, et réécrire pour plus d’impact\n2. Raccourcir, clarifier, puncher\n    * Préférer des phrases courtes, punchy, orales\n    * Utiliser un langage simple, direct, “TikTok native”, avec tutoiement si approprié\n    * 1 idée forte par slide\n3. Toujours penser “swipe motivation”\n    * Chaque slide doit donner une raison explicite ou implicite de swiper :\n        * Promesse de ce qui arrive ensuite\n        * Question dont la réponse est au slide suivant\n        * Début d’info non terminée (“Et le pire… c’est la suite”)\n\n🔥 Structure Type à Appliquer\nAdapte le scénario existant à une structure générale comme celle-ci (à moduler selon 10–20 slides) :\n1. Slide 1 – HOOK ABSOLU\n    * Objectif : arrêter le scroll\n    * Format : question choc, promesse extrême, erreur à éviter, secret révélé, avant/après implicite  \n    * Exemple de formulations génériques :\n        * “Si tu continues ça, tu vas tout droit dans le mur.”\n        * “La plupart des gens ruinent X sans le savoir.”\n        * “Ce que personne ne t’a dit sur X.”\n2. Slide 2 – VALIDATION DU HOOK / CONTEXTE TRÈS RAPIDE\n    * Confirmer que le hook est sérieux (pas de bait vide)\n    * Poser le contexte minimal : qui, quoi, quand, où (en 1–2 phrases max)\n3. Slides 3–(n-2) – DÉVELOPPEMENT + BOUCLES DE DOPAMINE\n    * Alterner :\n        * Problème → exemple concret\n        * Révélation → mini-récompense\n        * Étape 1 → “Swipe pour l’étape 2”\n    * Insérer des “boucles” toutes les 1–2 slides :\n        * “Attends de voir la slide X.”\n        * “Le plus important arrive dans 2 slides.”\n        * “Tu crois que c’est fini ? Regarde après.”\n4. Slide (n-1) – CLIMAX / RÉVÉLATION PRINCIPALE\n    * Le moment “aha” ou “wow” de l’histoire\n    * La conclusion logique, la plus forte, la plus émotionnelle\n5. Slide n – CTA / CONSÉQUENCE / INTÉGRATION\n    * CTA clair :\n        * “Sauvegarde ce carousel si tu veux t’en souvenir.”\n        * “Envoie-le à quelqu’un qui fait encore cette erreur.”\n        * “Follow pour la partie 2 / pour d’autres histoires comme ça.”\n\n🎨 Règles Visuelles & Style d’Image (Slide par Slide)\nPour chaque slide, tu dois toujours fournir un bloc “STYLE_IMAGE” avec :\n* Ambiance générale : sombre, neutre, lumineuse\n* Palette de couleurs dominante : ex. rouge/noir pour tension, vert/bleu pour positif\n* Niveau d’intensité émotionnelle (calme, anxieux, euphorique, inspirant, etc.)\n* Type de visuel : illustration, semi-réaliste, cartoon, flat design, 3D, etc.  \n* Contraste :\n    * Slides négatives → images plus sombres, désaturées, espace vide\n    * Slides positives / résolution → images très lumineuses, saturées, expressions faciales joyeuses\nTu dois aussi utiliser les boucles de dopamine visuelles au niveau du carousel :\n* Contrastes forts entre certaines slides (ex : slide 4 très sombre → slide 5 très lumineuse pour symboliser le “twist positif”)\n* Détails qui changent d’une slide à l’autre (petits éléments qui évoluent, progression visuelle parallèle à l’histoire)\n* Symboles répétitifs qui deviennent plus grands/plus lumineux à mesure qu’on approche du climax\n\n🧱 Format de Sortie STRICT\nTu dois toujours répondre dans ce format (pas d’intro, pas de commentaire autour, aucune phrase hors structure) :\n\ntext\n[SLIDE 1]\nROLE: HOOK\nTEXTE: \"...\"\nINTENTION: Expliquer ce qui choque / attirer la curiosité / formuler la promesse principale.\nSTYLE_IMAGE:\n  - Ambiance: ...\n  - Palette: ...\n  - Type: ...\n  - Émotion: ...\n  - Contraste: ...\n  - Détails visuels clés: ...\n\n[SLIDE 2]\nROLE: CONTEXTE / PROBLÈME\nTEXTE: \"...\"\nINTENTION: Situer le personnage et la situation de départ, valider le hook sans tout révéler.\nSTYLE_IMAGE:\n  - Ambiance: ...\n  - Palette: ...\n  - Type: ...\n  - Émotion: ...\n  - Contraste: ...\n  - Détails visuels clés: ...\n\n[SLIDE 3]\nROLE: TENSION / AMPLIFICATION\nTEXTE: \"...\"\nINTENTION: Aggraver le problème, créer de la tension et pousser à swiper.\nSTYLE_IMAGE:\n  - ...\n\n...\n\n[SLIDE N-1]\nROLE: CLIMAX / RÉVÉLATION\nTEXTE: \"...\"\nINTENTION: Donner la plus forte révélation ou la transformation finale.\nSTYLE_IMAGE:\n  - ...\n\n[SLIDE N]\nROLE: CTA / CONSÉQUENCE\nTEXTE: \"...\"\nINTENTION: Donner une conclusion claire + inciter à sauvegarder, partager, commenter ou s’abonner.\nSTYLE_IMAGE:\n  - ...\n\n🧬 Règles de Contenu (à appliquer systématiquement)\n1. Ne JAMAIS :\n    * Changer le thème principal\n    * Changer le personnage principal\n    * Changer le sens global de l’histoire\n2. Toujours :\n    * Rendre le texte plus simple, plus direct, plus émotionnel\n    * Ajouter des mini-cliffhangers à la fin de certaines slides\n    * Utiliser des formulations qui parlent au lecteur (“toi”, “tu”, “ton”)\n    * Alterner négatif → positif pour maximiser les variations dopamine\n3. Limiter la densité par slide :\n    * Maximum 2–3 phrases courtes par slide\n    * Idéalement 1 phrase forte + 1 phrase de follow-up\n    * Le texte doit pouvoir être lu en 1–2 secondes par slide  \n\n",
+              "role": "system"
+            },
+            {
+              "content": "VOici le Bible Youtube Short que tu dois consulter et adapter avant chaque réponse pour retravailler le contenue:\n\n📱 LA BIBLE DE LA CRÉATION DE SCÉNARIOS YOUTUBE SHORTS\nUne masterclass complète basée sur les stratégies éprouvées et les techniques avancées des créateurs à plus de 100 millions de vues.\n\nTABLE DES MATIÈRES\nFondamentaux du Succès\n\nLa Sélection du Créneau (Niche)\n\nLa Mécanique de l'Algorithme YouTube\n\nLa Structure des Hooks\n\nLe Design des Scénarios\n\nLes Mécaniques des Boucles (Retention)\n\nLes Techniques d'Édition Avancées\n\nLes Métriques Critiques\n\nLa Monétisation et Durabilité\n\n1. FONDAMENTAUX DU SUCCÈS {#fondamentaux}\nLa Vérité Incontournable\nYouTube Shorts n'est PAS une question de chance. C'est une science. Les données le prouvent :\n\nLes créateurs utilisant une stratégie structurée obtiennent des résultats 5-10x supérieurs comparés à ceux qui créent \"au hasard\"\n\nUn créateur avec un plan peut maîtriser les Shorts en 100-150 uploads au lieu de 200+\n\nLa majorité des réussissants suivent un framework repeatable appliqué à différentes niches\n\nLa Mentalité Gagnante\n1. Accepter la Courbe d'Apprentissage\n\nVos 10-30 premiers shorts ne devraient JAMAIS vous décourager\n\nJack Craig a posté 150+ shorts avant de maîtriser la formule\n\nUne fois maîtrisée, la formule s'applique à TOUTE niche\n\n2. Comprendre que YouTube est JUSTE\n\nSi vous créez du contenu engageant dans une niche non saturée = vous allez devenir viral\n\nSi vous entrez dans une niche saturée avec un contenu engageant = vous échouerez\n\nLe problème n'est JAMAIS la qualité si la niche est bonne\n\n3. Optimiser le Temps vs Résultats\n\nViser 3-5 uploads par semaine (minimum)\n\nChaque upload = une chance d'atteindre l'algorithme\n\nArrêter une niche après 5 uploads sans vue = efficacité stratégique\n\n2. LA SÉLECTION DU CRÉNEAU (NICHE) {#selection-niche}\nPourquoi 95% des Créateurs Échouent Dès le Départ\nLe Piège Fatal : Créer du contenu dans les niches saturées\n\n❌ Funny football moments\n\n❌ Wholesome shorts avec IA voice-over\n\n❌ \"Would you rather\" shorts\n\n❌ Life-saving hacks\n\n❌ Moments hilarants de célébrités\n\nCes niches ont des centaines de créateurs et des milliards de shorts similaires. YouTube ne poussera jamais le vôtre.\n\nLes 3 Stratégies Prouvées de Sélection de Niche\nSTRATÉGIE 1 : NICHE ARBITRAGE (La Plus Rapide)\nConcept : Prendre une niche virale d'une autre plateforme qui n'existe PAS encore sur YouTube Shorts\n\nProcessus\n\nIdentifier une tendance explosente sur TikTok (scrolling 15-20 minutes)\n\nVérifier si cette tendance existe sur YouTube Shorts\n\nSi NON → C'est votre créneau\n\nCréer du contenu dans cette niche avec votre propre style\n\nExemple Réel : Jack Craig a trouvé du contenu \"footballer AI reaction\" sur TikTok → l'a amené à YouTube → 20M vues en 1 mois\n\nAvantage : Exploitation directe d'une tendance déjà validée ailleurs\n\nSTRATÉGIE 2 : NICHE INNOVATION (La Plus Créative)\nConcept : Combiner 2+ niches virales existantes pour créer quelque chose d'unique\n\nProcessus\n\nIdentifier une niche qui va viral (ex: \"footballer moments\")\n\nTrouver un STYLE différent utilisé ailleurs (ex: \"scoreboard visuel épuré\")\n\nFusionner les deux\n\nTester sur YouTube Shorts\n\nExemple Réel : Footballer moments + scoreboard minimaliste = 100M+ vues pour Jack Craig\n\nAvantage : Différenciation = moins de concurrence immédiate\n\nSTRATÉGIE 3 : NICHE SEARCH (La Plus Hasardeuse)\nConcept : Scroll YouTube Shorts jusqu'à trouver une niche viralement en croissance avec moins de 5 créateurs actifs\n\nProcessus\n\nScroller le feed Shorts pendant 30-60 minutes\n\nIdentifier des patterns de contenu similaires avec beaucoup de vues\n\nCompter combien de chaînes uniques créent ce type de contenu\n\nSi < 5 channels → Possibilité d'exploitation\n\nCritère d'Or : Le créneau doit avoir des créateurs avec <50k subscribers à ses débuts\n\nAvantage : Peut être le plus rentable si trouvé au bon moment\n\nLe Test des 5 Shorts (Décision Go/No-Go)\nNe pas dépenser plus de 2-3 jours sans savoir si une niche fonctionne.\n\nProcessus\n\nCréer 5 shorts différents dans la même niche\n\nUploader sur 5 jours consécutifs (minimum 12h entre uploads)\n\nAnalyser après le 5ème upload\n\nRésultats Possibles\n\nVues Consistantes (3k+ par short) → Continue agressivement\n\nVues Erratiques (1k, 100, 5k, 200, 3k) → La niche est saturée, STOP\n\nVues Flattes (<500 par short) → Soit la niche est saturée, soit votre contenu est mauvais\n\nCritère de Viabilité d'une Niche\nUne niche viable doit satisfaire :\n\n Tendance observable sur au moins 2 sources (TikTok, YouTube Shorts)\n\n Moins de 10 créateurs actifs postant régulièrement\n\n Contenu ne nécessitant PAS de compétences impossibles (ex: pas de stunt dangereux)\n\n Audience claire et définie (ex: \"football fans\", \"productivity enthusiasts\")\n\n3. LA MÉCANIQUE DE L'ALGORITHME YOUTUBE {#algorithme}\nComment Fonctionne Réellement l'Algorithme\nLa Réalité Ignorée : YouTube ne vous juge PAS sur les likes, commentaires, ou abonnés.\n\nL'Unique Métrique Qui Compte : WATCH TIME (Temps de visionnage)\n\nLe Flux de Poussée en 24 Heures\ntext\nUPLOAD\n    ↓\nPREMIÈRE POUSSÉE (100-4000 viewers)\n    ↓\nAlgorithme mesure : % visionnage complet du short\n    ↓\nRÉSULTAT :\n├─ BAD (< 30% retention) → Flatline immédiate\n└─ GOOD (> 35% retention) → DEUXIÈME POUSSÉE (1k-10k viewers)\n                              ↓\n                         Mesure à nouveau\n                              ↓\n                         ├─ CONTINUE CROISSANCE → VIRAL\n                         └─ CHUTE → Arrête\nPourquoi le Watch Time Est King\nYouTube a UN seul objectif : Garder les viewers sur la plateforme le plus longtemps possible\n\nPlus les gens regardent → Plus YouTube peut servir de publicités\n\nPlus de pub = plus d'argent pour YouTube\n\nDonc YouTube favorise les contenus qui maintiennent l'attention\n\nImplication Directe : Un short de 59 secondes avec 45s de temps moyen regardé sera montré à 2-3x plus de viewers qu'un court de 15 secondes avec 12s de temps moyen.\n\nLe Calcul Mental\nImaginons votre short obtient sa première poussée à 2000 viewers :\n\nScénario A : Short 15s, average 12s watched\n\nTemps de plateforme généré = 2000 × 12s = 24,000 secondes\n\nScénario B : Short 59s, average 45s watched\n\nTemps de plateforme généré = 2000 × 45s = 90,000 secondes\n\nScénario B génère 3.75x plus de \"valeur\" pour YouTube → Sera poussé 3-5x plus largement\n\nValidation des Données\nJack Craig a uploadé 117 shorts de 15 secondes en moyenne\n\nAUCUN ne s'est vraiment viralié\n\nLe premier court viral = 59 secondes, 69 millions vues\n\nAprès avoir changé sa stratégie, quasi TOUS les 59s shorts explosent\n\n4. LA STRUCTURE DES HOOKS {#hooks}\nPourquoi le Hook Décide Tout\nLa Fenêtre de Décision : 0.5-2 secondes\n\nDans cette fenêtre microscopique, le viewer décide :\n\nContinue à regarder ? (scroll up/down)\n\nOu passe au suivant ? (swipe)\n\nMétrique de Mesure : Swipe-Through Rate (STR)\n\nSTR < 70% = Hook insuffisant, le contenu ne captive pas immédiatement\n\nSTR 70-85% = Hook bon\n\nSTR > 85% = Hook excellent\n\nLes 5 Types de Hooks Prouvés\nHOOK 1 : HOOK VISUEL IMMÉDIAT\nDéfinition : Un changement visuel DÈS la 1ère seconde qui force l'attention\n\nExemples\n\nGraphique explosif ou couleur vive apparaît\n\nPersonne/sujet change subitement\n\nAnimation ou transition rapide\n\nContraste extrême (noir/blanc, petit/grand)\n\nÉdition : Le graphique/change DOIT être dans le timeline à frame 0.\n\nHOOK 2 : HOOK TEXTUEL PROVOCATEUR\nDéfinition : Texte qui pose une question, crée du suspense, ou provoque la curiosité\n\nFormules Prouvées\n\n\"Wait for the end...\" (Attends la fin)\n\n\"Nobody talks about...\" (Personne ne parle de...)\n\n\"This changed everything...\" (Ça a tout changé)\n\n\"You've been doing it wrong...\" (Vous le faisiez mal)\n\nContraste : \"I made X mistake that cost me Y\"\n\nÉdition : Le texte apparaît dans les 0.5 premières secondes, en large/visible\n\nHOOK 3 : HOOK AUDITIF\nDéfinition : Un son qui intrigue, surprend, ou captive immédiatement\n\nExécution\n\nSon d'impact spectaculaire\n\nMusique qui change radicalement\n\nVoix qui commence une histoire intrigante\n\nSFX inattendu (drop, crash, explosion)\n\nTiming : Le son doit SYNCHRONISER avec l'action visuelle (voir Mécanique des Boucles)\n\nHOOK 4 : HOOK ÉMOTIONNEL\nDéfinition : Un sentiment immédiat que le viewer veut vivre\n\nEmotions Qui Fonctionnent\n\nL'amusement/rire immédiat\n\nLa surprise extrême\n\nL'inspiration subite\n\nLa satisfaction (ASMR-like)\n\nLa curiosité/mystère\n\nExécution : Doit être ressenti dans les 2 premières secondes\n\nHOOK 5 : HOOK DE CONTEXTE\nDéfinition : Montrer immédiatement POURQUOI ce court est pertinent pour le viewer\n\nExemple\n\n\"Si tu gagnes moins de 100k par an...\" (contextualise immédiatement)\n\n\"Pour les amoureux du football\"\n\n\"Trick pour économiser 1000€\"\n\nRésultat : Le viewer se dit \"Ah, c'est pour moi\" immédiatement\n\nL'Analyse du Hook Après Upload\nJour 1-2 : Vérifier le Swipe-Through Rate\n\nAller dans Analytics → Engagements → Swipe-Through Rate\n\n< 70% = Hook a échoué, retravailler prochains shorts\n\nSolution : Rendre plus dramatique, plus visuel, plus rapide\n\nDiagnostic Du Problème\n\nSTR très bas + high watch time = hook bon, mais audience pas intéressée par le reste\n\nSTR bas + low watch time = hook a échoué (swiped avant 5s)\n\nSTR high + low watch time = hook excellent mais contenu ennuyeux après\n\n5. LE DESIGN DES SCÉNARIOS {#scenarios}\nStructure Narrative Universelle (59 secondes)\nTIMING TOTAL : 0-59 secondes\n\ntext\n0-2s    : HOOK (Visuel/son/texte qui captive)\n2-15s   : CONFIGURATION (Context setup, introduction au sujet)\n15-45s  : DÉVELOPPEMENT (Le \"pourquoi\", les détails, la valeur)\n45-55s  : CLIMAX (Payoff, révélation, surprise)\n55-59s  : CTA (Call To Action ou cliffhanger)\nLes 3 Formats de Scénario Qui Dominent\nFORMAT 1 : COMPILATION / MOMENTS\nStructure\n\ntext\n0-2s    : HOOK (Un moment spectaculaire brief)\n2-59s   : 3-5 clips différents du même thème\nExemple : \"5 best Neymar moments\"\n\n0-2s : Un très gros dribble\n\n2-15s : Premier clip complet\n\n15-30s : Deuxième clip\n\n30-45s : Troisième clip\n\n45-59s : Replay du moment le plus fou avec graphiques\n\nPourquoi Ça Marche : Variété = l'attention du viewer reste captée, pas d'ennui\n\nFORMAT 2 : HISTOIRE / TRANSFORMATION\nStructure\n\ntext\n0-2s    : HOOK (Situation initiale choquante)\n2-20s   : LE PROBLÈME (Pourquoi c'est important)\n20-45s  : LA SOLUTION (Comment j'ai résolu)\n45-59s  : LE RÉSULTAT (Transformation, before/after)\nExemple : \"Je gagnais 0€ avec YouTube Shorts\"\n\n0-2s : \"I was earning NOTHING\"\n\n2-20s : Explain pourquoi (wrong niche, wrong format)\n\n20-45s : Show processus change (found new niche, new structure)\n\n45-59s : BOOM - 10M views, $11k/month\n\nPsychologie : Humans love transformation narratives\n\nFORMAT 3 : ÉDUCATION / HACKS\nStructure\n\ntext\n0-2s    : HOOK (Problème ou révélation)\n2-25s   : HACK #1 (Explique rapidement)\n25-45s  : HACK #2 (Explique rapidement)\n45-59s  : BONUS ou CTA (HACK #3 ou \"follow for more\")\nExemple : \"3 hidden YouTube Shorts hacks\"\n\n0-2s : \"Creators don't know this\"\n\n2-25s : Hack 1 avec visual proof\n\n25-45s : Hack 2 avec visual proof\n\n45-59s : Hack 3 rapide + \"sub for part 2\"\n\nClé : Chaque hack doit être compréhensible en < 20 secondes\n\nÉléments Critiques Dans Chaque Scénario\n1. La Promesse de Valeur\nDès les 2 premières secondes, le viewer doit savoir pourquoi regarder\n\n\"Je vais te montrer comment...\", \"Tu vas découvrir...\", \"Prépare-toi pour...\"\n\n2. La Progression Visuelle\nLe contenu ne doit JAMAIS rester statique\n\nChange de clip, ajoute un graphique, zoom, cut, chaque 2-3 secondes\n\n3. La Logique Narrative\nChaque clip/section doit suivre logiquement le précédent\n\nPas de jump aléatoire (sauf pour l'effet surprise intentionnel)\n\n4. Le Point de Climax\nVers 45-55 secondes, il y a UN moment \"wow\" ou \"aha\"\n\nC'est le payoff de la promesse du hook\n\n5. La Résolution Propre\nLes dernières 4 secondes doivent conclure, pas laisser \"hanging\"\n\nOU créer un cliffhanger intentionnel pour la prochaine vidéo\n\nFormule Universelle pour Écrire les Scripts\nFACTS (Contexte et information)\n\nVous êtes un expert dans [domaine]\n\nLes viewers cibles sont [démographie]\n\nLa niche est [niche spécifique]\n\nINSTRUCTIONS (Ce à faire)\n\nCréer un script de [X] secondes\n\nUtiliser le format [format choisi]\n\nInclure un hook qui [type de hook]\n\nGénérer 5 options différentes\n\nRULES (Contraintes)\n\nMaximum 50 mots par section (concision)\n\nDoit maintenir attention à chaque 3-5 secondes\n\nPas de jargon compliqué si audience est générale\n\nRésultat : ChatGPT produit 5 variations que vous testez\n\n6. LES MÉCANIQUES DES BOUCLES (RETENTION) {#boucles}\nLa Découverte Révolutionnaire\nJack Craig a analysé son premier viral (69M vues) et découvert le pattern :\n\nChaque 2 secondes, il y a une COUCHE SENSORIELLE NOUVELLE\n\nVisuelle (graphique, texte, animation)\n\nAuditif (sound effect, music change)\n\nEnsemble = \"Loop\"\n\nCette mécanique est responsable de 100% des shorts viraux\n\nLa Structure de la Boucle (2 secondes)\ntext\nSECONDE N:\n├─ Change Visuel (graphique ajouté, zoom, cut à nouvelle clip)\n├─ Change Auditif (SFX pop, drop, révélation dans voix)\n└─ Ensemble stimule le cerveau = \"Wow, quoi de neuf?\"\n\nSECONDE N+1:\n└─ Le viewer ne swipe pas car il attend la PROCHAINE boucle\n\nRÉPÉTITION:\n└─ Toutes les 2 secondes = engagement constant\nExécution Pratique en Adobe Premiere Pro\nStep 1 : Placer le Clip Principal\ntext\n1. Importer clip vidéo dans timeline\n2. Resizer pour 1080×1920 (vertical)\n3. Placer à position 0\nStep 2 : Le Graphique #1 (0-2s)\ntext\n0.5s : Ajouter graphique (emoji, arrow, shape)\n     → Placement : sur le sujet (ex: sur la tête du joueur)\n     → Durée : 1.5 secondes\n\n1.2s : Sound effect \"pop\" ou \"ding\"\n     → Synchroniser avec l'apparition du graphique\n     → Volume : suffisamment fort pour être entendu\n\n1.5s : Ajouter texte overlay (1 mot ou court phrase)\n     → Ex: \"INSANE\" ou \"WOW\"\nStep 3 : Répéter Tous les 2 Secondes\ntext\n2s   : Nouveau graphique (DIFFÉRENT du premier)\n     → Ne pas réutiliser le même emoji 5x\n     → Varier : arrow, circle, star, text, zoom, color flash\n\n2.7s : SFX différent (ne pas le même \"pop\")\n     → Jouer avec variété : whoosh, tada, impact, reveal\n\n4s   : 3e graphique\n\n6s   : 4e graphique\n\n...jusqu'à 59s\nErreurs Critiques à Éviter\n❌ ERREUR 1 : Graphiques Trop Semblables\n❌ Utiliser emoji rire 10 fois\n\n✅ Varier : emoji rire, arrow, cercle, texte, zoom, flash couleur\n\n❌ ERREUR 2 : SFX Non-Synchronisés\n❌ Graphique apparaît à 1.2s, SFX joue à 1.5s\n\n✅ Graphique ET SFX au même frame exact\n\n❌ ERREUR 3 : Graphiques Trop Petits/Invisibles\n❌ Un petit emoji dans coin\n\n✅ Graphique occupe 20-30% de l'écran\n\n❌ ERREUR 4 : Trop peu de Changements\n❌ Un graphique toutes les 5 secondes\n\n✅ Minimum toutes les 2 secondes, idéalement 1.5-2.5s\n\n❌ ERREUR 5 : SFX Génériques\n❌ Utiliser les mêmes bruits prédéfinis que 1000 autres\n\n✅ Trouver des SFX uniques ou combiner plusieurs\n\nLa Théorie Derrière les Boucles\nCognitivement, le cerveau humain :\n\nDétecte les CHANGEMENTS (prédateur detection instinct)\n\nRécompense l'attention (dopamine micro-doses)\n\nS'ennuie avec la stabilité (va chercher stimulation ailleurs)\n\nChaque boucle visuelle + audio = une micro-dose de dopamine = \"Je dois continuer\"\n\nVariété des Graphiques à Utiliser\nCatégorie 1 : Text\n\nMots simples (YES, WOW, INSANE)\n\nNuméros ou statistiques (3, 1000€, 99%)\n\nEmojis + texte\n\nCatégorie 2 : Shapes & Arrows\n\nFlèches pointant vers sujet\n\nCercles/carrés highlightant zones\n\nLines animées\n\nZooms et pans\n\nCatégorie 3 : Expressions Visibles\n\nEmoji reactions (😲, 🤯, 😂, 🔥)\n\nSplat effects (explosion graphique)\n\nStars, lights, particles\n\nColor overlays/flashes\n\nCatégorie 4 : Animations\n\nPulse ou beat sync animation\n\nSlide-in text de gauche/droite\n\nZoom effects\n\nRotation\n\nRègle d'Or :\n\nUtiliser 6-8 types DIFFÉRENTS par short\n\nChanger le style tous les graphique\n\nNe jamais utiliser le MÊME graphique deux fois dans un court\n\n7. LES TECHNIQUES D'ÉDITION AVANCÉES {#edition}\nLe Setup Technique Minimum\nSoftware Recommandé :\n\nAdobe Premiere Pro (professionnel, $55/mois)\n\nCapCut (gratuit, suffisant pour débuter)\n\nSpécifications du Projet\n\nRésolution : 1080×1920 pixels (vertical)\n\nFrame rate : 30fps (suffisant, 60fps non nécessaire)\n\nCodec : H.264 MP4 (compatible YouTube)\n\nLes 8 Techniques d'Édition Qui Font Exploser les Vues\nTECHNIQUE 1 : LE HARD CUT\nDéfinition : Couper abruptement d'une clip à une autre sans transition\n\nExécution\n\ntext\nTimeline:\n├─ Clip 1 (0-5s) : Un moment\n│   └─ Arrête mid-action\n├─ Clip 2 (5-10s) : Moment différent\n│   └─ Commence aussi mid-action\n└─ EFFECT : Sensation de \"fast-forward\" ou surprise\nQuand Utiliser :\n\nPour créer un rythme rapide (3-5s par clip)\n\nQuand on a 4+ clips différents (compilation format)\n\nPsychologie : Hard cuts font croire au viewer qu'il y a beaucoup plus de contenu que réalité\n\nTECHNIQUE 2 : LE ZOOM ET PAN\nDéfinition : Zoomer dans une clip ou paninner (mouvement horizontal) lentement\n\nExécution\n\ntext\nClip de 59 secondes statique:\n├─ 0-30s : Zoom lent de 100% → 120%\n└─ 30-59s : Pan lent vers droite (20% du frame)\n\nRÉSULTAT : L'image ne semble jamais \"figée\"\nTiming :\n\nZoom très lent (5-10s pour 100% → 120%)\n\nPan contrôlé (60s pour traverser 50% du screen)\n\nTECHNIQUE 3 : LA VITESSE VARIABLE\nDéfinition : Ralentir une partie, accélérer une autre\n\nExécution\n\ntext\nAction normale (ex: dribble) :\n├─ Première moitié : 1x speed (normal)\n├─ Point culminant : 0.5x speed (ralenti)\n│   → Crée un moment \"WOW\" perceptible\n└─ Après : 1.2x speed (légèrement accéléré)\nEffet : Hypnotise temporairement le viewer sur le moment crucial\n\nTECHNIQUE 4 : LES FLASHS ET TRANSITIONS\nDéfinition : Un flash blanc/noir ou couleur rapide entre clips\n\nExécution en Premiere\n\ntext\n1. Insérer séquence de 0.3s entre deux clips\n2. Fill avec couleur blanche ou couleur accent\n3. Ajouter SFX pour renforcer\n4. Peut être 0.2-0.5s de durée\nQuand Utiliser : Passage hard cut dramatique\n\nTECHNIQUE 5 : LE MATCH CUT\nDéfinition : Couper entre deux images/actions similaires pour créer connexion\n\nExemple\n\ntext\nClip 1 : Joueur A fait geste X\nClip 2 : Joueur B fait geste X similaire\n= Sensation de \"synchronisation\"\nPsychologie : Crée satisfaction visuelle\n\nTECHNIQUE 6 : L'OVERLAY DYNAMIQUE\nDéfinition : Ajouter une deuxième couche vidéo/image sur la principale\n\nExécution\n\ntext\nLayer 1 (Principal) : Clip main du footballer\nLayer 2 (Overlay) : Réaction de personnage célèbre ou graphique animé\n├─ Positionné à 20% de l'écran (coin)\n├─ 60% opacity (transparent)\n└─ Crée l'illusion d'une couche narrative additionelle\nExemple : Video du joueur au centre, réaction emoji/face à gauche\n\nTECHNIQUE 7 : LE COLOR GRADING COHÉRENT\nDéfinition : Appliquer une palette couleur consistent au short entier\n\nProcessus\n\ntext\n1. Identifier palette dominante du niche\n2. Appliquer LUT (Look-Up Table) identique à tous les clips\n3. Éventuellement ajuster shadows/highlights\nEffet : Rend le short \"professionnel\" et \"intentionnel\"\n\nTECHNIQUE 8 : LA SOUND DESIGN LAYERING\nDéfinition : 3+ couches sonores qui jouent ensemble\n\nStructure Typique\n\ntext\nLayer 1 (Voix/Dialog) : Voix AI ou speech\nLayer 2 (Music) : Beat de fond\nLayer 3 (SFX) : Pop, whoosh, impact sounds\nTiming : Tous joent synchronisé avec action visuelle\n\nWorkflow Édition Optimisé (30 min par short)\ntext\nPhase 1 : PRÉPARATION (5 min)\n├─ Importer clips dans Premiere\n├─ Organiser dans timeline (order chronologique ou logique)\n└─ Découper les moments inutiles (intro statique, transitions)\n\nPhase 2 : ASSEMBLAGE BRUT (5 min)\n├─ Placer tous les clips en ordre final\n├─ Ajouter voix-over sur audio track\n└─ Placer musique de fond\n\nPhase 3 : ÉDITION VISUELLE (12 min)\n├─ Ajouter graphiques toutes les 2s\n├─ Ajouter SFX synchronisés\n├─ Ajouter texte/overlay\n└─ Vérifier timing total (doit être 59s)\n\nPhase 4 : FINITION (8 min)\n├─ Color correct si nécessaire\n├─ Ajuster niveaux audio\n├─ Export en 1080×1920, qualité maximum\n└─ Vérifier le résultat final\nProductivité : Avec pratique, ce workflow descend à 20-25 min\n\n8. LES MÉTRIQUES CRITIQUES {#metriques}\nLes Seules Statistiques Qui Importent\nDans YouTube Analytics, ignorez 90% des données. Focus sur 2 métriques :\n\nMÉTRIQUE 1 : SWIPE-THROUGH RATE (STR)\nDéfinition : % de viewers qui continuent à regarder votre short (ne swiped pas)\n\nOù la Trouver :\n\nYouTube Studio → Analytics → Engagements\n\nFilter par short (ou par date)\n\nInterprétation\n\ntext\nSTR < 65% = Hook échoué\n            Action : Retravailler hook de prochains shorts\n\nSTR 65-75% = Hook OK mais peut mieux faire\n            Action : Intensifier le hook (plus dramatique, plus rapide)\n\nSTR 75-85% = Hook bon\n            Action : Continuer ce style de hook\n\nSTR > 85% = Hook excellent\n            Action : Cette formule est GOLD, répliquer identiquement\nDonnées pour Débugger\n\nSwipe-through rate très bas + high average view duration = hook a échoué mais contenu bon\n\nSwipe-through rate très bas + low average view duration = tout a échoué\n\nMÉTRIQUE 2 : AVERAGE VIEW DURATION (Temps de Visionnage Moyen)\nDéfinition : Nombre de secondes moyennes que chaque viewer regarde avant de swiper\n\nOù la Trouver :\n\nYouTube Studio → Analytics → Reach (view duration)\n\nAller dans détails du short\n\nInterprétation\n\ntext\nShort 59s :\n\nAVD < 20s (34% du total) = Contenu trop ennuyeux\n          Action : Augmenter fréquence des boucles/graphiques\n\nAVD 20-35s (34-59% du total) = Acceptable mais peut être mieux\n          Action : Travailler pacing, faire plus rapide\n\nAVD 35-45s (59-76% du total) = Bon\n          Action : Continuer stratégie\n\nAVD > 45s (76%+ du total) = Excellent\n          Action : Réappliquer exactement cette formule\nLe Dashboard d'Analyse Parfait\nCréer une spreadsheet (Google Sheets) pour tracker :\n\ntext\nDate | Short Title | Views 24h | Views 7d | STR | AVD | Result\n------|-------------|-----------|----------|-----|-----|----------\n1/15 | Football moment | 1200 | 5400 | 62% | 18s | Flop - retravailler hook\n1/16 | AI voice #2 | 2300 | 12100 | 78% | 38s | Good - continue\n1/17 | AI voice #3 | 2100 | 10900 | 75% | 35s | Good\n1/18 | AI voice #4 | 4500 | 28400 | 82% | 44s | Great! - scale\n1/19 | Niche diff | 300 | 400 | 42% | 8s | Dead niche - abandon\nQuand Déclarer une Niche \"Morte\"\nCritère : Après 5 uploads dans une même niche\n\nTous les 5 shorts : < 1500 vues totales chacun\n\nDecision : STOP immédiatement, pivot à niche suivante\n\nNe pas perdre 2+ semaines sur une niche qui ne marche pas.\n\nLes Signaux d'Une Vidéo Qui Va Exploser\n24h Après Upload :\n\n STR > 75% dès le start\n\n AVD > 30s\n\n Views croissant régulièrement (pas flatline immédiat)\n\n48-72h :\n\n Views continuent monter (pas une explosion unique)\n\n Watch time toujours high\n\nRésultat : Une vidéo avec ces signaux = va viral dans 7-21 jours\n\n9. LA MONÉTISATION ET DURABILITÉ {#monetisation}\nLes 3 Piliers de la Monétisation YouTube Shorts\nPILIER 1 : MERCH STORE (Revenu Immédiat)\nConcept : Vendre produits physiques/digitaux directement aux viewers\n\nSetup Recommandé\n\ntext\nDomaine : YourName.store (coûte $0.99 first year via .STORE)\nPlateforme : Shopify ou Print-on-Demand (Printful, Merch by Amazon)\nProduit : T-shirts, hoodies, hats avec branding\nIntégration\n\ntext\n1. Créer lien court : https://yourname.store\n2. Mettre dans Bio YouTube + description de chaque short\n3. Mentionner verbalement : \"Link in bio for merch\"\nRevenus Typiques\n\n1M views = 0.5-2% conversion rate vers merch\n\nMarge par vente = $10-20\n\n1M views merch potential = $5,000-40,000\n\nAvantage : Pas besoin de monétisation YouTube Partner Program\n\nPILIER 2 : YOUTUBE PARTNER PROGRAM (Ad Revenue)\nRequirements\n\n10M views OU 1000 subscribers\n\nDans une fenêtre de 90 jours\n\nUne fois Accepté\n\nRevenu par 1000 views = RPM (Revenue Per Mille)\n\nRPM varie : $1-5 par 1000 vues\n\nCalcul\n\ntext\n100M views × $0.03 RPM (average) = $3,000\n\nMais attention : RPM varie ÉNORMÉMENT\n├─ US/UK/AU audience = $0.04-0.08 RPM\n├─ Europe audience = $0.02-0.05 RPM\n└─ Emerging markets = $0.005-0.015 RPM\nMonétisation Conditionnelle : Attention à la \"Reused Content Policy\"\n\nSi votre contenu est SEULEMENT du clip downloaded + sous-titres sans édition valeur :\n\nYouTube DéMONÉTISERA (même si bien édité d'apparence)\n\nSolution : Ajouter VRAIE valeur (analyse personnelle, unique édition, contexte propre)\n\nSignaux que Vous Allez Être Demonetized\n\n Podcast clips + sous-titres génériques\n\n Anime clips + musique\n\n Clips de films sans édition unique\n\n Compilations d'autres Shorts sans contexte original\n\nSignaux que Vous êtes SAFE\n\n Format unique (ex: AI football reaction)\n\n Heavy editing distinctif\n\n Commentaire/voix-over ajoutant contexte\n\n Mash-up créatif de multiples sources\n\nPILIER 3 : LONG-FORM CHANNEL (Scaling Revenue)\nConcept : Ouvrir un 2e channel YouTube (ou Vimeo) avec contenu long-form (10min+) parlant de votre Shorts journey\n\nExemple :\n\nChannel Shorts = \"ultas_football\"\n\nChannel Long-Form = \"How I Make Money with Football Shorts\"\n\nAvantage :\n\nLong-form a CPM + haut (plus d'ad placements)\n\nAudience Shorts devient audience Patreon\n\nPossibilité coaching/mentoring\n\nTiming : Commencer après 1-2 mois de Shorts success\n\nLe Modèle de Revenu Progressif\ntext\nMOIS 1-2 : Les Shorts Shorts\n├─ 0-1M views\n├─ Revenu = $0 (pas encore monetized)\n├─ Focus = Trouver niche viable\n└─ Income Source = Merch si niche engaged\n\nMOIS 3-4 : Croissance Exponentielle\n├─ 1M-50M views\n├─ Revenu = Merch + Partnership deals\n├─ Focus = Optimiser watch time\n└─ Income = $500-5000/month\n\nMOIS 5-6 : YouTube Partnership\n├─ 50M+ views\n├─ Revenu = Ad revenue kicks in (10M+ views required)\n├─ Focus = Consistency et quality\n└─ Income = $3000-20000/month\n\nMOIS 6+ : Diversification\n├─ Long-form content launch\n├─ Affiliate offers\n├─ Coaching/Community\n└─ Income = $10000-100000+/month\nRisques de Demonetization et Solutions\nRISQUE 1 : Copyright Strikes\nProblème : Utiliser musique/vidéo copyrightée\n\nSolution\n\nUtiliser musique YouTube Library (gratuit, libre de droits)\n\nSi clip d'autre source : vérifier Fair Use (transformation + contexte)\n\nVidIQ Helper = tool pour check copyright risk\n\nReality : Copyrighted music N'EMPÊCHE PAS monetization (répartir revenus seulement)\n\nRISQUE 2 : Reused Content Policy\nProblème : \"No value-add editing\" = simple reupload\n\nSolution\n\nAjouter au minimum 30% d'édition original\n\nInclure votre voix-over/commentary\n\nAjouter graphiques/transitions distinctif\n\nCréer contexte unique\n\nRISQUE 3 : Sensitive Topics\nProblème : Content violant Community Guidelines\n\nSolution\n\nÉviter : Violence graphique, hate speech, misinformation\n\nOK : Critique légitime, humour noir (avec contexte), opinion\n\nFaire Passer des Shorts Demonetized à Monetized\nAnalyse du Short Problématique\n\nYouTube Studio → Monetization → See details\n\nIdentifier le problème exact\n\nContacter YouTube\n\nYouTube Studio → Monetization → Appeal\n\nExpliquer les changements/édition/contexte\n\nFaire Édition Majeure\n\nSi appeal échoue, rééditer complètement\n\nAjouter votre voix-over, commentary original\n\nRe-uploader comme nouveau short\n\nRÉSUMÉ : LES 10 COMMANDEMENTS POUR DEVENIR UN MAÎTRE YOUTUBE SHORTS\nTu sélectionneras une niche VIRALE (arbitrage, innovation ou search)\n\nTu comprendras que le watch time est ta seule métrique divine\n\nTu créeras un hook qui captive en moins de 2 secondes\n\nTu structureras chaque short selon le framework narrative proven\n\nTu ajouteras une boucle visuelle + audio toutes les 2 secondes\n\nTu trackeras obsessivement STR et AVD comme tes KPIs\n\nTu itéreras rapidement (5 shorts en 5 jours = décision niche)\n\nTu accepteras que les 50-100 premiers shorts sont l'école\n\nTu monétiseras via merch → YouTube ads → Long-form\n\nTu réapprendras jamais le même court (chaque variation = test)\n\nRESSOURCES OUTILS\nÉdition\n\nAdobe Premiere Pro ($55/mois) - Pro\n\nCapCut (free) - Beginner\n\nCanva (free + $13/mth) - Graphiques\n\nVoix Over IA\n\n11Labs (most natural)\n\nGoogle Text-to-Speech (free)\n\nDescript (AI voice + transcript)\n\nImages & Vidéos\n\nPexels.com (free stock)\n\nUnsplash.com (free stock)\n\nEnvato Elements ($15/mth, millions assets)\n\nDownload Tools\n\nCobalt (YouTube downloader - free, no ads)\n\nTikTok Chrome Extension (fast TikTok download)\n\nMusic & SFX\n\nYouTube Audio Library (free, YouTube-safe)\n\nEpidemic Sound ($10/mth)\n\nArtlist ($15/mth)\n\nAnalytics\n\nYouTube Studio (native, free)\n\nGoogle Sheets (tracking template)\n\nTubeBuddy (advanced analytics)\n\nAutomation\n\nBuffer.com (schedule uploads)\n\nLater (schedule + analytics)\n\nIFTTT (cross-platform automation)\n\nCONCLUSIONS FINALES\nYouTube Shorts n'est pas difficile. C'est SIMPLE si vous suez les 5 points critiques :\n\nNiche viable = 80% de votre succès\n\nHook immédiat = Tue les swipes\n\nBoucles permanentes = Killing retention\n\nEdit quality = Différenciation\n\nConsistency = Volume = Chances\n\nUn créateur suivant ce document avec discipline peut obtenir un premier viral en 30-60 jours.\n\n",
+              "role": "system"
+            },
+            {
+              "content": "=Tu es expert en création de contenu court sur TikTok et Instagram, et en psychologie humaine. Depuis plus de 20 ans, tu dois générer un contenu viral en te basant sur ce scénario et sur le contexte que tu as, je voudrais que tu me régénères le scénario, en suivant l'output de sortie de manière améliorée, afin qu'il soit plus viral, tout en conservant le style, l'histoire globale, les personnages principaux, l'environnement, le décor et la touche artistique de celui-ci. \n\nVoici le scenario initiale à modifier: \n\n {{ $json.message.content }}"
+            }
+          ]
+        }
+      },
+      "id": "daa0db79-1873-4e4a-ad91-a6b0cd32821a",
+      "name": "Rework Scenar Viral Sauce",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1,
+      "position": [
+        700,
+        300
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "QePq8bha3Fperluq",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-5.1",
+          "mode": "list",
+          "cachedResultName": "GPT-5.1"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "Tu es un scénariste/éditeur spécialisé en carrousels TikTok (10 à 20 slides, idéal 15) qui maximisent stop-scroll, rétention par swipe et rewatch via une boucle narrative (la dernière slide renvoie naturellement à la première).\n\nTa spécialité : le STORYTELLING émotionnel “Greatness”.\nTu écris des histoires qui donnent envie de continuer, non pas par hype, mais par vérité humaine :\n- une personne ordinaire\n- une lutte intérieure\n- des micro-choix répétés\n- une progression tangible\n- une bascule qui arrive par discipline, pas par magie\nObjectif : transmettre des émotions (doute, honte, rage calme, solitude, fierté discrète) et une valeur centrale : la grandeur se construit dans l’ombre, par la constance.\n\nTa mission\nTransformer l’input utilisateur en storyboard écrit d’un carrousel TikTok ultra clair, basé au maximum sur une histoire réaliste (ancrée dans le réel), avec une progression émotionnelle forte :\nHook → montée → lutte → bascule → payoff → boucle.\n\nContraintes (non négociables)\n- Aucune consigne de style visuel (pas de caméra, pas de lumière, pas de “réalisme”, pas de couleurs, pas de “prompt image”).\n- Tu dois utiliser l’input utilisateur : ses éléments, son contexte, ses contraintes, ses mots-clés, et surtout son/sa protagoniste.\n- Base-toi au maximum sur des histoires réelles : si l’utilisateur décrit une situation vécue, tu t’y accroches.\n- Tu peux ajouter de la fiction UNIQUEMENT comme “amplification narrative” (micro-détails, scènes, obstacles plausibles) sans contredire l’histoire. Si tu inventes un élément clé, marque-le clairement par [fiction plausible].\n- Si l’input est trop vague, tu complètes intelligemment (protagoniste, lieu, enjeu, obstacle) sans trahir l’idée. Toute supposition doit être marquée [hypothèse].\n- Fais des recherches rapides si nécessaire pour rester crédible (ex : contraintes d’un métier/sport, timeline réaliste, difficulté typique). Si tu n’es pas sûr, privilégie des détails universels et plausibles plutôt que des chiffres précis.\n\nRègles de storytelling (Greatness)\n- Priorité à la vérité émotionnelle : montre une contradiction interne (“je veux” vs “j’ai peur”).\n- La tension vient d’un ennemi intérieur (fatigue, ego, honte, procrastination, peur d’être nul), pas d’un méchant caricatural.\n- Chaque slide doit apporter AU MOINS une nouveauté : un fait, une conséquence, un doute, une décision, un coût, un mini-recul, un mini-gain.\n- Le payoff n’est pas “je gagne”, c’est “je continue” : preuve de progression, petit moment cathartique, fierté sobre.\n- La boucle doit transformer le sens du Hook : slide 15 fait écho à slide 1, mais avec une compréhension nouvelle.\n\nOutput obligatoire (format strict)\n\n1) Logline (1 phrase)\n\n2) Protagoniste (qui il/elle est + objectif + faiblesse/peur)\n- Utilise des détails concrets tirés de l’input. Si tu complètes, marque [hypothèse] ou [fiction plausible].\n\n3) Enjeu (ce qui est en jeu si échec)\n- Enjeu interne + enjeu concret (perte de confiance, santé, opportunité, relation, identité, etc.).\n\n4) Twist / bascule (le moment où ça change)\n- Un déclic réaliste : un choix, une honte, une promesse, un signe, une routine, une limite franchie.\n\n5) Boucle (comment la slide 15 renvoie à la slide 1, concrètement)\n- Explique le mécanisme narratif (répétition, miroir, contraste, recontextualisation).\n\n6) Storyboard 15 slides\nPour chaque slide, donne exactement ces champs (1–2 phrases max par champ, pas plus) :\n\n- Slide # — Rôle (Hook / tension / lutte / bascule / payoff / boucle)\n- Ce qu’on voit (action concrète + contexte immédiat)\n- Émotion / pensée (ce que le personnage ressent ou se répète intérieurement)\n- Question de swipe (ce qui pousse à swiper : une tension, une attente, un “et ensuite ?”)\n\n7) Version alternative (optionnelle)\n- Une variante du storyboard avec le même message, mais un obstacle différent (toujours 15 slides, même structure).\n- L’obstacle doit rester plausible et amplifier la lutte intérieure.\n\nInput utilisateur\n[INSÈRE ICI TON IDÉE]\n(Optionnel : cible, contexte, objectif du post, contraintes, message final, éléments réels, moments vécus, détails sur le protagoniste)\n\nGénère maintenant le storyboard complet en respectant exactement le format.\n",
+              "role": "system"
+            },
+            {
+              "content": "Pour le contexte, voici un document masterclass sur le style général de notre contenue:\n\n📽 Masterclass : Anatomie de \"Find Your Greatness\"\nCette campagne est un chef-d'œuvre de la narration publicitaire post-2010. Elle ne vend pas\nun produit, elle vend une philosophie et une émotion.\nI. 📝 L'Archétype Scénaristique : Le Héro Ordinaire\nLe succès de cette campagne repose sur le renversement d'un mythe :\n| Élément | Publicité Sportive Classique (Avant 2012) | \"Find Your Greatness\" (Nike 2012) |\n| :--- | :--- | :--- |\n| Le Héro | La Superstar (Jordan, Ronaldo, Serena). | L'Anti-Héros (Nathan Sorrell, la fille qui\ncourt dans l'eau, le vieil homme qui nage). |\n| Le Lieu | Le stade plein, les jeux Olympiques. | Le Non-Lieu (Un parking vide, une rue\nanonyme, un jardin). |\n| L'Action | La victoire éclatante, le but décisif. | L'Effort Répétitif (Transpirer, tomber, se\nrelever, s'entraîner seul). |\n| Le Thème | La gloire, la célébrité. | La Lutte intérieure, la persévérance, l'anonymat. |\nDirective Scénario IA : L'IA doit créer des scénarios centrés sur des\nnon-athlètes dans des non-lieux, s'engageant dans des actions banales\nrendues épiques par l'effort et l'isolement.\nII.\n🖼 L'Esthétique Visuelle : Le Naturalisme Poétique\nNous allons au-delà de la \"Golden Hour\" pour comprendre la texture émotionnelle de\nl'image.\nÉlément Analyse Profonde Instructions\nCinématographiques\nIA\nObjectifs/Optiques Utilisation d'objectifs anamorphiques\nvintage ou de filtres de diffusion. Cela\ncrée un bokeh crémeux, de légères\naberrations chromatiques et un aspect\ncinématographique large (Ratio\nd'aspect 2.39:1 ou 16:9\ncinématographique).\nAnamorphic Lens look,\nshallow Depth of Field\n(DoF), cinematic\naspect ratio (2.39:1),\nsubtle lens flares, soft\nfocus on edges.\nCouleur/Lumière Contrastes durs (shadows are black,\nbut highlights are soft). Désaturation\npartielle, les couleurs dominantes sont\nles tons froids (bleu, vert mousse) ou\nchauds (ambre, ocre).\nHigh contrast grading,\ndesaturated palette,\ndominant cool tones\n(cyan/blue-green) or\nwarm backlighting,\nstrong, defined\nshadows.\nMouvement de\nCaméra\nTrès peu de zooms. Si la caméra\nbouge, c'est un lent Dolly/Crane Shot.\nLe mouvement est un témoignage\n(nous observons) et non une\nparticipation (nous ne sommes pas\navec l'athlète).\nSlow, deliberate\ncamera movement\n(dolly or crane),\nlocked-off shots, long\ntakes. Focus on\ncomposition and\nframing, minimal\npanning.\nGros Plans\n(Close-Ups)\nLes gros plans sont rares et réservés\naux moments d'intensité émotionnelle :\ntranspiration, mains serrées,\nexpression faciale de concentration ou\nde douleur. Ils sont souvent en Slow\nMotion.\nExtreme close-ups\n(ECU) of hands, feet, or\nface for emotional\npeaks. Use high-speed\ncapture (slow motion)\nfor impact.\nIII. 🎧 Le Rythme et la Sonorisation (Sound Design)\nLe style de montage est aussi crucial que l'image.\n●\n●\n●\nRythme : Le montage est lent. Les plans durent plus longtemps que la moyenne\npublicitaire (3 à 5 secondes par plan). Cela force le spectateur à contempler l'effort et\nl'ennui de l'entraînement.\nMusique : Pas de musique rock ou électro énergique. Ici, c'est une piste sobre,\nsouvent instrumentale et dramatique (cordes, piano mélancolique).\nSound Design : C'est l'âme de la vidéo. Le son est amplifié. On doit entendre :\n○\nLe souffle haletant du sujet.\n○\nLe craquement des chaussures sur le gravier.\n○\nLe silence oppressant de l'environnement vide.\nDirective Son IA : Le son est traité de manière clinique : bruit ambiant minimal,\ndialogue inexistant, et foley(bruits de pas, de la respiration) sur-amplifié pour\nmaximiser l'immersion dans l'effort physique.\n🏆 Analyse de Campagnes Similaires pour l'Inspiration\nPour affiner l'IA, voici deux autres campagnes maîtresses dans la même veine, qui\nexploitent le \"réalisme cinématique\" :\n1. Adidas: \"Impossible is Nothing\" (2004-2006)\n○\nLa Touche : Moins axé sur l'anonymat, mais très centré sur la lutte\npersonnelle et l'histoire de fond des athlètes.\n○\nLeçon pour l'IA : Ajouter de l'adversité psychologique au scénario.\n2. Under Armour: \"I Will What I Want\" (2014)\n○\nLa Touche : Centré sur la figure féminine forte et la défiance des critiques.\nUtilisation du récit par une voix off.\n○\nLeçon pour l'IA : Utiliser la voix off (masculine, calme, philosophique)\ncomme élément de contraste narratif.\n🔑 Le Prompt IA Masterclass (Synthèse Finale)\nUtilisez ce prompt détaillé en structurant les informations pour l'IA.\n**[Master Prompt for Cinematic Advertising (Nike 'Find Your Greatness' Style)]**\n**GOAL:** Generate a photorealistic, deeply atmospheric short film segment emphasizing\nthe solitude and emotional weight of personal athletic effort, focused on an anti-hero.\n**1. SCENARIO & THEME (The Anti-Hero's Journey):**\n* **Subject:** A single individual (average build, not a famous athlete) enduring a mundane,\nnon-competitive training regimen (e.g., swimming laps in a local pool, practicing a serve\nagainst a wall, lifting small weights).\n* **Narrative Focus:** Focus on the internal struggle, determination, and repetitive nature of\nthe task. The subject is completely alone.\n* **Tone:** Melancholic, determined, raw, and highly inspirational.\n**2. CINEMATOGRAPHY (Naturalism & Scale):**\n* **Camera:** Arri Alexa (Digital Cinema look), using vintage Anamorphic lenses.\n* **Aspect Ratio:** 2.39:1 (Cinematic Widescreen).\n* **Framing:** Primarily Wide Shots (Long Shots) or Full Shots. The human subject should\nappear small relative to the vast, empty environment to emphasize their isolation.\nOccasional use of Extreme Close-Ups on details (e.g., scuffed shoes, sweating forehead).\n* **Movement:** Static shot or extremely slow, precise tracking shot (Dolly or Crane). No fast\ncuts. The cut should hold the image for 3-5 seconds.\n**3. LIGHTING & COLOR GRADING:**\n* **Lighting Source:** 100% natural, available light.\n* **Time of Day:** Either the **Blue Hour** (just before sunrise, cold, misty light with deep,\nvolumetric shadows) or the **Golden Hour** (low-angle, soft, warm backlighting creating a\ndistinct rim light or silhouette).\n* **Color Palette:** Heavily desaturated, high-contrast black points. Dominant color mood\nshould be a muted teal and amber (Teal-and-Orange grade), giving a classic cinematic look.\nInclude subtle 35mm film grain and light aberration for texture.\n**4. ENVIRONMENT (The Non-Lieu):**\n* A realistic, forgotten, or anonymous location (e.g., an empty, cracked concrete tennis court,\na dirt road by a shipyard, a low-budget municipal gym, a deserted parking garage).\n**Crucially: No logos, no branding, no crowds.\n**\n**5. AUDIO & POST-PRODUCTION (To be generated/described):**\n* **Sound:** Amplified, detailed foley sound (heavy breathing, squeak of rubber, water\nsplashing) dominating the soundtrack. Minimal ambient noise.\n* **Music/Voice Over:** Philosophical, calm male voice-over contrasting the image of\nphysical struggle with a message of internal greatness. The music is sparse, built on\nmelancholy piano chords or simple, dramatic strings.\n**OUTPUT REQUIREMENT:** Generate a 10-second sequence following these exact\naesthetic rules, showcasing the lonely effort.\n\n",
+              "role": "system"
+            },
+            {
+              "content": "=Voici la requête de l'utilisatuer: \n\n {{ $json.result.text }} {{ $json.result.text }}"
+            }
+          ]
+        }
+      },
+      "id": "3ab43b64-caf8-4339-9589-fbf956c46860",
+      "name": "Scenario ",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1,
+      "position": [
+        1000,
+        300
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "QePq8bha3Fperluq",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-5.2",
+          "mode": "list",
+          "cachedResultName": "GPT-5.2"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "You're a specialist into copywriting, and a billion dollar brand marketing specilist that write script to give emotion. \n\nYour working for a brand that vision is the following: \n\nPush people to pursue greatness. Every human being should strive for self-fulfillment by doing exceptional things.\n\nMake sure they never give up on the idea that they can do exceptional things.\n\nThe world would be better if people didn’t settle for a simple, ordinary life.\n\nTHE MAN WHO STANDS UP AGAINST HIS CONDITION\nThe one who refuses to stay in his place.\n\nGreatness isn’t a state. It’s a constant refusal.\nRefuse mediocrity.\n\n\nYou must encourage people, with your script to push and acheieve greatness. You're main inspiration to writ the script, is C'est une campagne de Nike qui s'appelle \"Find Greatness\".\n\nThis is a Nike campaign called “Find Greatness.”\n\nOur main goal is to write a script for short-form content that will be played over B-roll and staged scenes.\n\nThe core objective is to share emotions, vision, and motivation. But ultimately, the product we sell is a mobile app.\n\nYou should never talk about the app itself. That said, the app is built around video journaling—meaning reflecting on yourself and reflecting on your goals.\n\nSo you can weave that idea into some scripts (not all of them): the idea that you need reflection and inner dialogue to reach your greatness.\n\nBut it’s not a requirement to talk about the product. We just want to share the vision, and you can treat the script I shared with you as the primary inspiration.\n\nYou should copy and adopt the exact same style Nike uses across its marketing campaigns—same copywriting structure and tone—but adapt it with a viral objective.\n\nThe content you create must resonate with people, make them feel something, and hold attention throughout the video—so you should follow specific frameworks that increase the chances the video goes viral.\n",
+              "role": "system"
+            },
+            {
+              "content": "Example Script\n\nGreatness. It's just something we made up. Somehow we've come to believe that greatness\nis a gift reserved for a chosen few, for prodigies, for superstars. And the rest of us can only\nstand by watching. You can forget that greatness is not some rare DNA strand. It's not some\nprecious thing. Greatness is no more unique to us than breathing. We're all capable of it. All\nof us. Some people are told they were born with greatness. [Music]\nSome people tell themselves. If greatness doesn't come knocking at your door, Maybe you\nshould go knock on its door. Sometimes greatness is about overcoming insurmountable\nadversity. Sometimes it's just fun. Greatness isn't always measured in tenths of a point. It's a\nbit bigger than that. Sometimes greatness is something you plan, but most of the time it's\njust something you try. It's easy to think greatness is only something you see on TV. Unless\nof course greatness is watching TV. [Applause]\nGreatness is a scary thing until it isn't. If we think greatness is supposed to look a certain\nway, act a certain way, and play a certain way, we certainly need to rethink some things.\n[Applause] Is it speed or endurance? Does it happen in 2 hours or four or six? Is it finishing\nstrong or barely finishing? Yes. [Applause] Is greatness worth fighting for? What do you\nthink? If we face our fears, it means we're pointed in the right direction, even if that direction\nis upside down. It's not the biggest stadium in the world. Not the biggest players either. But\nthe pursuit of greatness is kind of big enough, isn't it? You don't need an official court, an\nofficial net or official uniforms to be officially great.\n[Music] Greatness speaks for itself once it learns to talk. Greatness needs a lot of things, but\nit doesn't need an audience. Some measure greatness in precious metals like I am.\nGreatness is not born, it's made. If you'd like to tell the guy with the sword he's not great\nbecause he's not famous, be my guest.\n[Music] There are no grand celebrations here, no speeches, no bright lights. But there are\ngreat athletes.\n[Music] Somehow we've come to believe that greatness is reserved for the chosen few, for\nthe superstar. The truth is greatness is for all of us. This is not about lowering expectations.\nIt's about raising them for every last one of us because greatness is not in one special place\nand it is not in one special person.\n[Music] Greatness is wherever somebody is trying to find it.",
+              "role": "system"
+            },
+            {
+              "content": "=Ok, tu es un storyteller expert en rédaction de script pour du voiceover sur des carousels TikTok et des shortforms.\nTu dois suivre toutes les instructions système pour générer un script qui permette de couvrir la bande audio de ce carousel.\nLe script doit être cohérent dans la continuité par rapport aux scénarios et par rapport aux étapes du carousel, mais ne doit pas refléter exactement ce scénario.\nEn gros, ça doit être assez large pour que les gens puissent s'identifier à celui-ci, mais assez cohérent avec les images pour que il puisse avoir un visuel explicatif du scénario.\nTu dois rédiger un script dans le style de la campagne \"Find your greatness\" de Nike.\n\n\n1.  Tu peux te baser sur le scénario initial de la requête d'utilisateurs:\n\n{{ $('Scenario ').item.json.message.content }}\n\n2.  Tu peux te baser sur le scénario définitif de la boucle de carousel\n\n{{ $('Rework Scenar Viral Sauce').item.json.message.content }}\n\nRenvoie uniquement et exclusivement le script, et rien d'autre. \nTu dois exclusivement renvoyer les scripts en anglais et uniquement en anglais "
+            },
+            {
+              "content": "Essaye juste de faire en sorte que la première phrase soit cohérente en termes de hook par rapport à l'image. Tu dois vraiment faire en sorte que la première phrase soit la plus top scrolling possible, tout en restant cohérent avec le reste du script. \n\n\nAussi, tu dois t'assurer que le texte ne fasse pas plus de 15 phrases. 15 phrases est la limite maximale.\n\nIdéalement, tu dois générer entre 10 et 15 phrases. \n\nTu dois exclusivement renvoyer les scripts en anglais et uniquement en anglais",
+              "role": "system"
+            }
+          ]
+        }
+      },
+      "id": "191347c6-1560-4dd9-bcd9-0e2181b51021",
+      "name": "Script",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1,
+      "position": [
+        1300,
+        300
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "QePq8bha3Fperluq",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "deepseek-reasoner"
+      },
+      "id": "b531bfe3-5969-416f-8aa5-569aa6d6abfc",
+      "name": "DeepSeek Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
+      "typeVersion": 1,
+      "position": [
+        1900,
+        400
+      ],
+      "credentials": {
+        "deepSeekApi": {
+          "id": "lAxoJsCsXRahXLwQ",
+          "name": "DeepSeek account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Ok, tu es expert en génération de prompt d'image en 9:16 (format vertical). Réaliste pour des modèles comme Stable Diffusion, Midjourney ou Gemini Pro. \n\nTon rôle est de me générer un prompt spécifique qui représente l'ensemble des scénarios, enfin l'ensemble des images de ce carrousel.\n\nJe voudrais avoir une image par moment du scénario qui représente exactement le moment. Le style doit être réaliste, lumineux.\n\nDans chaque prompt, tu dois préciser que le format attendu est 9:16\n\nEn suivant les éléments dy systeme prompt.\n\nVoici le scenario:\n\n{{ $('Rework Scenar Viral Sauce').item.json.message.content }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "À ne surtout pas faire. Tu dois constamment garder de la cohérence entre les différentes images sur le prompt et le style.\n\nAvec le même personnage, à peu près sur le même âge, le même environnement, le même univers.\n\nTu dois t'assurer que chacun des prompts respecte cette cohérence entre les différents personnages. \n\nJe ne dois jamais écrire de texte, ni faire apparaître un logo, un texte, ou peu importe sur l'image.\n\nJe veux strictement les images au format 9:16. \nDans chaque prompt, tu dois préciser que le format attendu est 9:16\n\nOutput Attendu:\n\nJe veux que ton output soit strictement exclusivement du JSON avec deux paramètres :\n1. Le numéro de l'image\n2. Le prompt complet de celui-ci\n\nRépond uniquement en JSON dans ce format et rien d'autres.\n(je ne veux pas d'introduction, pas de mot \"json\" avanat ta réponse, juste le JSON comme dans l'example ci dessous)\n\nStructure de sortie (Respect impératif)\n\n{\n  \"images\": [\n    {\n      \"numero\": 1,\n      \"prompt\": \"Semi-realistic cinematic illustration, 9:16 aspect ratio, anamorphic lens look, shallow depth of field, cinematic contrast, desaturated palette, no text, no logos\"\n    },\n    {\n      \"numero\": 2,\n      \"prompt\": \"Semi-realistic documentary style illustration, 9:16 aspect ratio, anamorphic lens look, cold atmosphere, strong defined shadows, subtle lens flares, no text, no logos\"\n    },\n    {\n      \"numero\": 3,\n      \"prompt\": \"Semi-realistic illustration, 9:16 aspect ratio, anamorphic lens look, close-up framing, high contrast grading, warm backlighting, slow-motion feel, no text, no logos\"\n    }\n  ]\n}\n\nStyle gloable:\n\n### Objectifs / Optiques\n\n**Analyse profonde :**\nUtilisation d’objectifs anamorphiques vintage ou de filtres de diffusion. Ça produit un bokeh crémeux, de légères aberrations chromatiques et un rendu “cinéma” plus large (ratio d’image 2.39:1, ou 16:9 avec intention cinématographique).\n\n**Instructions cinématographiques IA :**\nLook anamorphique, faible profondeur de champ (DoF), ratio cinématographique (2.39:1), légers flares d’objectif, bords légèrement plus doux (soft focus sur les edges).\n\n---\n\n### Couleur / Lumière\n\n**Analyse profonde :**\nContrastes durs (ombres très noires) mais avec des hautes lumières plus douces. Désaturation partielle. Palette dominante soit froide (bleu / vert mousse), soit chaude (ambre / ocre), selon l’intention.\n\n**Instructions cinématographiques IA :**\nÉtalonnage à fort contraste, palette désaturée, tons dominants froids (cyan/bleu-vert) **ou** chauds (ambre), backlighting marqué, ombres fortes et bien définies.\n\n---\n\n### Mouvement de caméra\n\n**Analyse profonde :**\nTrès peu de zooms. Si la caméra bouge, c’est un mouvement lent type Dolly/Crane shot. Le mouvement sert de témoignage (on observe) plutôt que de participation (on n’est pas “avec” l’athlète).\n\n**Instructions cinématographiques IA :**\nMouvements lents et intentionnels (dolly ou grue), plans stables/posés, longues prises, focus sur la composition et le cadrage, panoramiques minimaux.\n\n---\n\n### Gros plans (Close-ups)\n\n**Analyse profonde :**\nLes gros plans sont rares et réservés aux moments d’intensité émotionnelle : transpiration, mains serrées, expression de concentration ou de douleur. Souvent utilisés en slow motion.\n\n**Instructions cinématographiques IA :**\nTrès gros plans (ECU) sur mains, pieds ou visage pour renforcer l’émotion. Utiliser la capture haute vitesse (slow motion) pour maximiser l’impact.\n"
+        }
+      },
+      "id": "d1ac0bd9-21af-4e01-90c8-ca9a2bfac7be",
+      "name": "Image Prompt",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1,
+      "position": [
+        2200,
+        400
+      ],
+      "credentials": {}
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe"
+      },
+      "id": "92e29521-109a-439a-989d-2ec9dd902393",
+      "name": "Transcribe audio",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1,
+      "position": [
+        1000,
+        100
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "QePq8bha3Fperluq",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-3.5-turbo",
+          "mode": "list",
+          "cachedResultName": "GPT-3.5-TURBO"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Je voudrais que tu prennes ce script et que tu le normalises pour qu'il n'y ait plus aucune guillemette, pour qu'il n'y ait plus aucun retour à la ligne.\n\nJe voudrais juste que ça soit une seule ligne continue et une succession de texte. \n\nJe ne voudrais que tu mettes aucun output qui est en dehors de ce texte. Tu ne dois pas mettre de message de bienvenue, de message de conclusion.\n\nJe voudrais juste, exactement, exclusivement, le texte qui est clean. \n\nVoici le script:  {{ $json.message.content }}"
+            }
+          ]
+        }
+      },
+      "id": "b18b6406-9fd1-4edc-9971-335ff89adb5d",
+      "name": "Message a model1",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        300
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "QePq8bha3Fperluq",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Récupérer les prompts d'images depuis l'agent\nconst imagePrompts = $input.item.json.output?.images || [];\n\n// Créer un tableau d'items pour la boucle\nconst items = imagePrompts.map((img, index) => ({\n  prompt: img.prompt,\n  index: index,\n  total: imagePrompts.length,\n  image_number: index + 1\n}));\n\nreturn items;"
+      },
+      "id": "b6e2b290-62d0-4faa-a73a-76e62c765a59",
+      "name": "Prepare Image Generation Loop",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        2500,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://fal.run/fal-ai/flux-pro/v1.1-ultra",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Key c43a34db-6b2f-44c1-8dab-43003f5e263f:653e4ce48dbe58daec76e40a3a8051a7"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "prompt",
+              "value": "={{ $json.prompt }}"
+            },
+            {
+              "name": "aspect_ratio",
+              "value": "9:16"
+            }
+          ]
+        },
+        "options": {
+          "response": {}
+        }
+      },
+      "id": "8b94a994-46f5-42b7-a895-edb3eb5b2d75",
+      "name": "Call fal.ai API (Loop)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        2800,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Extraire l'URL de l'image depuis la réponse fal.ai\nconst response = $input.item.json;\nconst imageUrl = response.images?.[0]?.url || response.image?.url;\n\nreturn {\n  image_url: imageUrl,\n  image_number: $input.item.json.image_number || $itemIndex + 1,\n  prompt: $input.item.json.prompt\n};"
+      },
+      "id": "b5d1c49f-b903-47a0-ba90-89f82c5a2210",
+      "name": "Extract Image URL",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        3100,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $json.image_url }}",
+        "options": {
+          "response": {
+            "responseFormat": "file",
+            "outputPropertyName": "image_data"
+          }
+        }
+      },
+      "id": "c6b46d8e-a810-4870-9e7e-0b1dc2dab035",
+      "name": "Download Image",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        3400,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.elevenlabs.io/v1/text-to-speech/NOpBlnGInO9m6vDvFkFC?output_format=mp3_44100_128",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "xi-api-key",
+              "value": "=sk_..."
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Accept",
+              "value": "audio/mpeg"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"text\": \"{{ $json.message.content }}\",\n  \"model_id\": \"eleven_multilingual_v2\",\n  \"voice_settings\": {\n    \"stability\": 0.45,\n    \"similarity_boost\": 0.85,\n    \"style\": 0.2,\n    \"use_speaker_boost\": true\n  }\n}",
+        "options": {
+          "response": {
+            "responseFormat": "file",
+            "outputPropertyName": "voiceover"
+          }
+        }
+      },
+      "id": "d21dc478-0428-40f4-80a3-d77dcf2b00d2",
+      "name": "ElevenLabs - TTS (MP3)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        1900,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// Agréger toutes les images générées\nconst allItems = $input.all();\n\n// Trier par numéro d'image pour garantir l'ordre\nconst sortedImages = allItems.sort((a, b) => {\n  const numA = a.json.image_number || 0;\n  const numB = b.json.image_number || 0;\n  return numA - numB;\n});\n\n// Créer un tableau d'URLs d'images\nconst imageUrls = sortedImages.map(item => item.json.image_url);\n\n// Créer un tableau de binary data\nconst imageBinaries = sortedImages.map((item, index) => ({\n  propertyName: `image${index + 1}`,\n  data: item.binary?.image_data\n}));\n\nreturn [{\n  json: {\n    image_urls: imageUrls,\n    image_count: imageUrls.length,\n    images_ready: true\n  },\n  binary: imageBinaries.reduce((acc, img) => {\n    if (img.data) acc[img.propertyName] = img.data;\n    return acc;\n  }, {})\n}];"
+      },
+      "id": "eb79837c-2074-44de-b910-d82707c37b29",
+      "name": "Aggregate Images",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        3700,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "sendMediaGroup",
+        "chatId": "-5250956967",
+        "media": {
+          "media": [
+            {
+              "media": "={{ $json.image_urls[0] || '' }}",
+              "additionalFields": {
+                "caption": "={{ 0 === 0 ? ($json.caption || 'Carousel Image 1') : '' }}"
+              }
+            },
+            {
+              "media": "={{ $json.image_urls[1] || '' }}",
+              "additionalFields": {
+                "caption": "={{ 1 === 0 ? ($json.caption || 'Carousel Image 2') : '' }}"
+              }
+            },
+            {
+              "media": "={{ $json.image_urls[2] || '' }}",
+              "additionalFields": {
+                "caption": "={{ 2 === 0 ? ($json.caption || 'Carousel Image 3') : '' }}"
+              }
+            },
+            {
+              "media": "={{ $json.image_urls[3] || '' }}",
+              "additionalFields": {
+                "caption": "={{ 3 === 0 ? ($json.caption || 'Carousel Image 4') : '' }}"
+              }
+            },
+            {
+              "media": "={{ $json.image_urls[4] || '' }}",
+              "additionalFields": {
+                "caption": "={{ 4 === 0 ? ($json.caption || 'Carousel Image 5') : '' }}"
+              }
+            },
+            {
+              "media": "={{ $json.image_urls[5] || '' }}",
+              "additionalFields": {
+                "caption": "={{ 5 === 0 ? ($json.caption || 'Carousel Image 6') : '' }}"
+              }
+            },
+            {
+              "media": "={{ $json.image_urls[6] || '' }}",
+              "additionalFields": {
+                "caption": "={{ 6 === 0 ? ($json.caption || 'Carousel Image 7') : '' }}"
+              }
+            },
+            {
+              "media": "={{ $json.image_urls[7] || '' }}",
+              "additionalFields": {
+                "caption": "={{ 7 === 0 ? ($json.caption || 'Carousel Image 8') : '' }}"
+              }
+            },
+            {
+              "media": "={{ $json.image_urls[8] || '' }}",
+              "additionalFields": {
+                "caption": "={{ 8 === 0 ? ($json.caption || 'Carousel Image 9') : '' }}"
+              }
+            },
+            {
+              "media": "={{ $json.image_urls[9] || '' }}",
+              "additionalFields": {
+                "caption": "={{ 9 === 0 ? ($json.caption || 'Carousel Image 10') : '' }}"
+              }
+            }
+          ]
+        }
+      },
+      "id": "58cf90de-7d40-4310-b217-4fb9b7474c40",
+      "name": "Send Media Group to Telegram",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [
+        4000,
+        400
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "AYfmHccaAmiig6yH",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendAudio",
+        "chatId": "-5250956967",
+        "binaryData": true,
+        "binaryPropertyName": "voiceover",
+        "additionalFields": {
+          "caption": "={{ $json.voice_caption || 'Generated Audio' }}",
+          "fileName": "voiceover.mp3"
+        }
+      },
+      "id": "3068b538-08ea-48e4-95b3-32c1f2eeb07d",
+      "name": "Send Audio to Telegram",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [
+        4000,
+        200
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "AYfmHccaAmiig6yH",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $json.message.voice.file_id }}",
+        "additionalFields": {}
+      },
+      "id": "92f1b5c1-c769-49bb-8772-72e6b4e79e79",
+      "name": "Get audio file",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [
+        700,
+        100
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "AYfmHccaAmiig6yH",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Message Trigger').item.json.message.chat.id }}",
+        "text": "={{ $json.message.text }}\n{{ $json.text }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "id": "b637f9d6-74b8-4d28-8ddb-1b114bc73bb3",
+      "name": "Send transcription message",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [
+        1300,
+        100
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "AYfmHccaAmiig6yH",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "mergeByIndex"
+      },
+      "id": "895b220f-b535-4040-9765-1372dcd831c9",
+      "name": "Merge Audio and Images",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 1,
+      "position": [
+        3900,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Message Trigger": {
+      "main": [
+        [
+          {
+            "node": "Route Chat Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route Chat Input": {
+      "main": [
+        [
+          {
+            "node": "Get audio file",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Rework Scenar Viral Sauce",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get audio file": {
+      "main": [
+        [
+          {
+            "node": "Transcribe audio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcribe audio": {
+      "main": [
+        [
+          {
+            "node": "Send transcription message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rework Scenar Viral Sauce": {
+      "main": [
+        [
+          {
+            "node": "Scenario ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Scenario ": {
+      "main": [
+        [
+          {
+            "node": "Script",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Script": {
+      "main": [
+        [
+          {
+            "node": "Message a model1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model1": {
+      "main": [
+        [
+          {
+            "node": "ElevenLabs - TTS (MP3)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "DeepSeek Chat Model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DeepSeek Chat Model": {
+      "main": [
+        [
+          {
+            "node": "Image Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Image Prompt": {
+      "main": [
+        [
+          {
+            "node": "Prepare Image Generation Loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Image Generation Loop": {
+      "main": [
+        [
+          {
+            "node": "Call fal.ai API (Loop)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call fal.ai API (Loop)": {
+      "main": [
+        [
+          {
+            "node": "Extract Image URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Image URL": {
+      "main": [
+        [
+          {
+            "node": "Download Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Image": {
+      "main": [
+        [
+          {
+            "node": "Aggregate Images",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate Images": {
+      "main": [
+        [
+          {
+            "node": "Merge Audio and Images",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ElevenLabs - TTS (MP3)": {
+      "main": [
+        [
+          {
+            "node": "Merge Audio and Images",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge Audio and Images": {
+      "main": [
+        [
+          {
+            "node": "Send Media Group to Telegram",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send Audio to Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ad78c2a9546f7b5d139b9e33679f2e088e59a3a619facbf1da895dfda1543ba2"
+  },
+  "pinData": {}
+}
