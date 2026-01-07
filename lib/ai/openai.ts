@@ -15,11 +15,21 @@ import {
   SCRIPT_NORMALIZATION_PROMPT
 } from '@/lib/prompts/original-n8n-prompts';
 
-// Client OpenAI (utilise la vraie clé OpenAI pour TOUT)
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-  baseURL: 'https://api.openai.com/v1',
-});
+// Client OpenAI
+// IMPORTANT: instantiate lazily so that `next build` doesn't crash when env vars
+// are not present during static analysis / page data collection.
+let _openai: OpenAI | null = null;
+function getOpenAIClient() {
+  if (_openai) return _openai;
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) {
+    throw new Error(
+      'The OPENAI_API_KEY environment variable is missing or empty; either provide it, or instantiate the OpenAI client with an apiKey option.'
+    );
+  }
+  _openai = new OpenAI({ apiKey, baseURL: 'https://api.openai.com/v1' });
+  return _openai;
+}
 
 interface ScriptSlide {
   numero: number;
@@ -166,7 +176,7 @@ export async function generateVoiceoverScript(reworkedScenario: string, initialS
  * Enlève les guillemets et retours à la ligne
  */
 export async function normalizeScript(script: string): Promise<string> {
-  const completion = await openai.chat.completions.create({
+  const completion = await getOpenAIClient().chat.completions.create({
     model: 'gpt-3.5-turbo', // GPT-3.5 pour normalisation (moins cher)
     messages: [
       { role: 'user', content: `${SCRIPT_NORMALIZATION_PROMPT}\n\nVoici le script:\n${script}` }
@@ -261,7 +271,7 @@ export async function transcribeAudio(audioBuffer: Buffer): Promise<string> {
   // OpenAI SDK expects a web File/Blob. Convert Node Buffer to Uint8Array to satisfy TS (BlobPart).
   const file = new File([new Uint8Array(audioBuffer)], 'audio.ogg', { type: 'audio/ogg' });
   
-  const transcription = await openai.audio.transcriptions.create({
+  const transcription = await getOpenAIClient().audio.transcriptions.create({
     file: file,
     model: 'whisper-1',
   });
